@@ -146,61 +146,46 @@ import addressRouter from "./routes/AddressRouter.js";
 
 const app = express();
 
-console.log("🚀 Server starting...");
-
-// MANUAL CORS MIDDLEWARE - SIMPLIFIED
+// MANUAL CORS MIDDLEWARE
 app.use((req, res, next) => {
-  console.log(`📨 Incoming ${req.method} request to: ${req.url}`);
-  
   const allowedOrigins = [
     'https://bookstore-app-rosy.vercel.app',
     'http://localhost:3000'
   ];
   const origin = req.headers.origin;
   
-  console.log(`🌐 Origin: ${origin}`);
-  
   if (allowedOrigins.includes(origin)) {
     res.header('Access-Control-Allow-Origin', origin);
   }
   
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Cookie, Set-Cookie');
   res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Expose-Headers', 'Set-Cookie');
   
   if (req.method === 'OPTIONS') {
-    console.log("✅ Handling OPTIONS preflight");
     return res.status(200).end();
   }
   
   next();
 });
 
-// DATABASE with error handling
-console.log("🔗 Connecting to database...");
-connectDB().catch(err => {
-  console.error("❌ Database connection failed:", err);
-});
+// DATABASE - Remove the .catch() for serverless
+connectDB();
 
-// MIDDLEWARES with error handling
+// MIDDLEWARES
 app.use((req, res, next) => {
-  try {
-    if (req.originalUrl === "/order/webhook") {
-      return next();
-    } else {
-      return express.json()(req, res, next);
-    }
-  } catch (error) {
-    console.error("❌ JSON middleware error:", error);
-    next(error);
+  if (req.originalUrl === "/order/webhook") {
+    return next();
+  } else {
+    return express.json()(req, res, next);
   }
 });
 
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// ROUTES with error handling
-console.log("🛣️ Setting up routes...");
+// ROUTES
 app.use("/images", express.static("uploads"));
 app.use("/user", userRouter);
 app.use("/admin", adminRouter);
@@ -209,50 +194,42 @@ app.use("/cart", cartRouter);
 app.use("/order", orderRouter);
 app.use("/address", addressRouter);
 
-// TEST ENDPOINT - Add this to verify server is working
+// TEST ENDPOINTS
 app.get("/test", (req, res) => {
-  console.log("✅ Test endpoint hit");
-  res.json({ 
-    message: "Server is working!",
-    timestamp: new Date().toISOString()
-  });
+  res.json({ message: "Server is working!", timestamp: new Date().toISOString() });
 });
 
-// Test endpoint for books specifically
 app.get("/book/test", (req, res) => {
-  console.log("✅ Book test endpoint hit");
-  res.json({ 
-    message: "Book route is working!",
-    timestamp: new Date().toISOString()
-  });
+  res.json({ message: "Book route is working!", timestamp: new Date().toISOString() });
 });
 
 app.get("/", (req, res) => {
   res.send("Welcome to the Server");
 });
 
-// GLOBAL ERROR HANDLER - ADD THIS
+// GLOBAL ERROR HANDLER
 app.use((err, req, res, next) => {
-  console.error("💥 GLOBAL ERROR:", err);
-  res.status(500).json({ 
-    success: false, 
-    message: "Internal Server Error",
-    error: err.message 
-  });
+  console.error("Error:", err);
+  res.status(500).json({ success: false, message: "Internal Server Error" });
 });
 
 // 404 HANDLER
 app.use((req, res) => {
-  console.log(`❌ 404 - Route not found: ${req.method} ${req.url}`);
-  res.status(404).json({ 
-    success: false, 
-    message: "Route not found" 
-  });
+  res.status(404).json({ success: false, message: "Route not found" });
 });
 
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`✅ Server is running on port ${PORT}`);
+app.get("/api/test", (req, res) => {
+  res.json({ message: "API route working" });
 });
 
-export default app;
+
+// VERCEL SERVERLESS EXPORT - Use this format
+export default async function handler(req, res) {
+  // For serverless, we need to handle the request through app
+  return app(req, res);
+}
+
+// Remove the app.listen() for Vercel serverless
+// app.listen(process.env.PORT || 8080, () => {
+//     console.log(`Server is running on port ${process.env.PORT || 8080}`);
+// });
