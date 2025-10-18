@@ -27,7 +27,7 @@ const PORT = process.env.PORT || 8080;
 connectDB();
 
 // MIDDLEWARES
-app.use(cors({origin: "http://localhost:5173",
+app.use(cors({origin: process.env.CLIENT_URL,
     credentials:true
 }));
 // app.use(express.json());
