@@ -90,9 +90,6 @@ app.get("/",(req,res) => {
     res.send("Welcome to the Server");
 });
 
-// app.listen(PORT,()=>{
-//     console.log(`Server is listening on port ${PORT}`);
-// })
 
 app.use((err, req, res, next) => {
   console.error("SERVER ERROR:", err);
@@ -101,4 +98,4 @@ app.use((err, req, res, next) => {
 
 export default function handler(req, res) {
   return app(req, res);
-}
+} 

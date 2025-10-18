@@ -13,7 +13,8 @@
   "description": "",
   "devDependencies": {
     "concurrently": "^9.2.1"
+  },
+  "dependencies": {
+    "cloudinary": "^2.7.0"
   }
-  
 }
-
