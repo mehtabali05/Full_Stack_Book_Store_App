@@ -24,12 +24,15 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 // DATABASE 
-// connectDB();
+
 
 // MIDDLEWARES
 app.use(cors({origin: "https://full-stack-book-store-app-66d7.vercel.app",
     credentials:true
 }));
+
+connectDB();
+
 // app.use(express.json());
 // Only skip express.json for the webhook path:
 app.use((req, res, next) => {
