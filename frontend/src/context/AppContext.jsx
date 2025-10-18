@@ -91,7 +91,7 @@ const AppContextProvider = ({children}) => {
         const fetchBooksData = async () => {
             try {
                 const {data} = await axios.get("/book/get-books");
-                // console.log("Books data",data.books);
+                console.log("Books data",data.books);
                 if(data.success){
                     setBooksData(data.books); 
                 }else{

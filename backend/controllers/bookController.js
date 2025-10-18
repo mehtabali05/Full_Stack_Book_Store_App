@@ -59,6 +59,7 @@ export const addBook = async (req,res) => {
 // get All books => /book/get-books
 export const getBooks = async (req,res) => {
     try {
+        console.log("GET /book/get-books HIT");
         const books =  await Book.find();
         return res.status(200).json({
             success: true,
