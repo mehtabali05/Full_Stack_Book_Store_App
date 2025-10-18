@@ -27,7 +27,7 @@ const app = express();
 connectDB();
 
 // MIDDLEWARES
-app.use(cors({origin: "https://full-stack-book-store-app-66d7.vercel.app",
+app.use(cors({origin: "https://bookstore-delta-peach.vercel.app",
     credentials:true
 }));
 
