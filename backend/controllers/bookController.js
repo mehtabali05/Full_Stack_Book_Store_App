@@ -2,11 +2,12 @@
 // import { cloudinaryConfig } from "../index.js";
 import Book from "../models/BookModel.js";
 import mongoose from "mongoose";
-import { cloudinaryConfig } from "../utils/cloudinary.js";
+import { getCloudinary } from "../utils/cloudinary.js";
 
 // add a new book => /book/add
 export const addBook = async (req,res) => {
     try {
+        const cloudinary = getCloudinary();
         const {
             title,
             author,
@@ -24,7 +25,7 @@ export const addBook = async (req,res) => {
         }
 
         const file = req.file.path;
-        const uploadResult = await cloudinaryConfig.uploader.upload(file, {
+        const uploadResult = await cloudinary.uploader.upload(file, {
             folder: 'bookstore', // 🆕 optional folder name in Cloudinary
         });
         const image = uploadResult.secure_url;

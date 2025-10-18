@@ -37,16 +37,26 @@ const allowedOrigins = [
   "https://bookstore-68e2aicay-mehtabali05s-projects.vercel.app",
 ];
 
+// app.use(
+//   cors({
+//     origin: function (origin, callback) {
+//       // allow REST tools or no-origin like mobile apps/postman
+//       if (!origin) return callback(null, true);
+//       if (allowedOrigins.includes(origin)) {
+//         return callback(null, true);
+//       } else {
+//         return callback(new Error("Not allowed by CORS"));
+//       }
+//     },
+//     credentials: true,
+//   })
+// );
+
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // allow REST tools or no-origin like mobile apps/postman
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      } else {
-        return callback(new Error("Not allowed by CORS"));
-      }
+    origin(origin, cb) {
+      if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
+      return cb(new Error("Not allowed by CORS"));
     },
     credentials: true,
   })
