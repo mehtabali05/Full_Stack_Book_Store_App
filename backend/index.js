@@ -27,8 +27,34 @@ const PORT = process.env.PORT || 8080;
 // connectDB();
 
 // MIDDLEWARES
-app.use(cors({origin: process.env.CLIENT_URL,
-    credentials:true
+// app.use(cors({origin: process.env.CLIENT_URL,
+//     credentials:true
+// }));
+
+let allowedOrigin;
+if (process.env.NODE_ENV === 'production') {
+    // Vercel's production environment
+    allowedOrigin = process.env.CLIENT_URL; 
+} else {
+    // Vercel's preview environment or local dev
+    // Check for a specific Preview URL if available, otherwise default to a wildcard for local/preview ease
+    allowedOrigin = process.env.CLIENT_URL_PREVIEW || 'http://localhost:3000'; 
+}
+
+// CORS Configuration
+app.use(cors({
+    origin: allowedOrigin,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, // IMPORTANT for cookies/sessions/auth tokens
+    optionsSuccessStatus: 204
+}));
+
+// Add a specific handler for the OPTIONS (preflight) request that Vercel often requires
+app.options('*', cors({
+    origin: allowedOrigin,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204
 }));
 // app.use(express.json());
 // Only skip express.json for the webhook path:
