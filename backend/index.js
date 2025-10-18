@@ -89,4 +89,6 @@ app.use((err, req, res, next) => {
   res.status(500).json({ success: false, message: "Internal Server Error" });
 });
 
-export default app;
+export default function handler(req, res) {
+  return app(req, res);
+}
