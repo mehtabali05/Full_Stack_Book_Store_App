@@ -27,7 +27,7 @@ const PORT = process.env.PORT || 8080;
 // connectDB();
 
 // MIDDLEWARES
-app.use(cors({origin: process.env.CLIENT_URL,
+app.use(cors({origin: "https://full-stack-book-store-app-66d7.vercel.app",
     credentials:true
 }));
 // app.use(express.json());
