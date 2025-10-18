@@ -15,7 +15,7 @@ import addressRouter from "./routes/AddressRouter.js";
 const app = express();
 // const PORT = process.env.PORT || 8080;
 
-const clientUrl = process.env.CLIENT_URL || 'http://localhost:3000';
+// const clientUrl = process.env.CLIENT_URL || 'http://localhost:3000';
 
 // DATABASE 
 connectDB();
@@ -25,11 +25,29 @@ connectDB();
 // });
 
 // MIDDLEWARES
-app.use(cors({origin: clientUrl,
-    credentials:true
+// app.use(cors({origin: clientUrl,
+//     credentials:true
+// }));
+
+app.use(cors({
+  origin: [
+    'https://bookstore-app-rosy.vercel.app',
+    'http://localhost:3000'
+  ],
+  credentials: true, // This is crucial for cookies
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: [
+    'Content-Type', 
+    'Authorization', 
+    'X-Requested-With',
+    'Cookie', // Add this
+    'Set-Cookie' // Add this
+  ],
+  exposedHeaders: ['Set-Cookie'] // Add this to expose cookies to frontend
 }));
 
-
+// Handle preflight requests
+app.options('*', cors());
 
 // const allowedOrigins = [
 //   "https://bookstore-delta-peach.vercel.app",
@@ -96,6 +114,20 @@ app.get("/",(req,res) => {
 //   res.status(500).json({ success: false, message: "Internal Server Error" });
 // });
 
+app.use((err, req, res, next) => {
+  console.error("Global Error Handler:", err);
+  res.status(500).json({ 
+    success: false, 
+    message: "Internal Server Error",
+    error: process.env.NODE_ENV === 'development' ? err.message : undefined
+  });
+});
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ success: false, message: "Route not found" });
+});
+
 app.listen(process.env.PORT || 8080, () => {
     console.log(`Server is running on port ${process.env.PORT || 8080}`);
 });
@@ -103,3 +135,5 @@ app.listen(process.env.PORT || 8080, () => {
 // export default function handler(req, res) {
 //   return app(req, res);
 // } 
+
+export default app;
