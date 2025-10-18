@@ -7,7 +7,7 @@
       "headers": [
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "https://bookstore-app-rosy.vercel.app" // ONLY YOUR FRONTEND URL
+          "value": "https://bookstore-app-rosy.vercel.app" 
         },
         {
           "key": "Access-Control-Allow-Methods",
