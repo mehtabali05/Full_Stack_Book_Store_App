@@ -8,7 +8,7 @@ axios.defaults.withCredentials = true;
 export const AppContext = createContext(null); 
 
 const AppContextProvider = ({children}) => {
-        const navigate = useNavigate();
+        const navigate = useNavigate(); 
         const [user,setUser] = useState(null);
         const [booksData,setBooksData] = useState([]);
         const [searchQuery,setSearchQuery] = useState("");
@@ -91,7 +91,7 @@ const AppContextProvider = ({children}) => {
         const fetchBooksData = async () => {
             try {
                 const {data} = await axios.get("/book/get-books");
-                console.log("Books data",data.books);
+                // console.log("Books data",data.books);
                 if(data.success){
                     setBooksData(data.books); 
                 }else{

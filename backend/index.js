@@ -1,15 +1,7 @@
 import express from "express"
 import dotenv from "dotenv"
 dotenv.config();
-// import { v2 as cloudinary } from 'cloudinary';
 
-// cloudinary.config({
-//   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-//   api_key: process.env.CLOUDINARY_API_KEY,
-//   api_secret: process.env.CLOUDINARY_API_SECRET,
-// });
-
-// const cloudinaryConfig = cloudinary;
 import cookieParser from "cookie-parser"
 import cors from "cors"
 import { connectDB } from "./config/connectDB.js";
@@ -21,21 +13,25 @@ import orderRouter from "./routes/OrderRouter.js";
 import addressRouter from "./routes/AddressRouter.js";
 
 const app = express();
-// const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8080;
 
 // DATABASE 
 connectDB();
+// connectDB().catch(err => {
+//   console.error("DB connection failed on startup:", err);
+//   // do NOT throw here — we want the function to load, but log the problem
+// });
 
 // MIDDLEWARES
-// app.use(cors({origin: "https://bookstore-delta-peach.vercel.app",
-//     credentials:true
-// }));
+app.use(cors({origin: process.env.CLIENT_URL,
+    credentials:true
+}));
 
-const allowedOrigins = [
-  "https://bookstore-delta-peach.vercel.app",
-  "https://bookstore-git-main-mehtabali05s-projects.vercel.app",
-  "https://bookstore-68e2aicay-mehtabali05s-projects.vercel.app",
-];
+// const allowedOrigins = [
+//   "https://bookstore-delta-peach.vercel.app",
+//   "https://bookstore-git-main-mehtabali05s-projects.vercel.app",
+//   "https://bookstore-68e2aicay-mehtabali05s-projects.vercel.app",
+// ];
 
 // app.use(
 //   cors({
@@ -52,15 +48,15 @@ const allowedOrigins = [
 //   })
 // );
 
-app.use(
-  cors({
-    origin(origin, cb) {
-      if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
-      return cb(new Error("Not allowed by CORS"));
-    },
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin(origin, cb) {
+//       if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
+//       return cb(new Error("Not allowed by CORS"));
+//     },
+//     credentials: true,
+//   })
+// );
 
 
 
@@ -91,11 +87,15 @@ app.get("/",(req,res) => {
 });
 
 
-app.use((err, req, res, next) => {
-  console.error("SERVER ERROR:", err);
-  res.status(500).json({ success: false, message: "Internal Server Error" });
+// app.use((err, req, res, next) => {
+//   console.error("SERVER ERROR:", err);
+//   res.status(500).json({ success: false, message: "Internal Server Error" });
+// });
+
+app.listen(process.env.PORT || 8080, () => {
+    console.log(`Server is running on port ${process.env.PORT || 8080}`);
 });
 
-export default function handler(req, res) {
-  return app(req, res);
-} 
+// export default function handler(req, res) {
+//   return app(req, res);
+// } 
