@@ -1,4 +1,5 @@
-import cloudinary from "../index.js";
+// import cloudinary from "../index.js";
+import { cloudinaryConfig } from "../index.js";
 import Book from "../models/BookModel.js";
 import mongoose from "mongoose";
 
@@ -22,7 +23,7 @@ export const addBook = async (req,res) => {
         }
 
         const file = req.file.path;
-        const uploadResult = await cloudinary.uploader.upload(file, {
+        const uploadResult = await cloudinaryConfig.uploader.upload(file, {
             folder: 'bookstore', // 🆕 optional folder name in Cloudinary
         });
         const image = uploadResult.secure_url;
@@ -45,7 +46,7 @@ export const addBook = async (req,res) => {
             book,
           });
     } catch (error) {
-        console.log("Error during add book",error);
+        // console.log("Error during add book",error);
         return res.status(500).json({
             success: false,
             message: "Internal Server Error"
