@@ -9,7 +9,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export default cloudinary;
+export const cloudinaryConfig = cloudinary;
 import cookieParser from "cookie-parser"
 import cors from "cors"
 import { connectDB } from "./config/connectDB.js";
@@ -56,6 +56,9 @@ app.get("/",(req,res) => {
     res.send("Welcome to the Server");
 });
 
-app.listen(PORT,()=>{
-    console.log(`Server is listening on port ${PORT}`);
-})
+// app.listen(PORT,()=>{
+//     console.log(`Server is listening on port ${PORT}`);
+// })
+
+
+export default app;
