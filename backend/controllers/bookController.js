@@ -61,6 +61,7 @@ export const addBook = async (req,res) => {
 export const getBooks = async (req,res) => {
     try {
         // console.log("GET /book/get-books HIT");
+        console.log("📚 Fetching books...");
         const books =  await Book.find();
         return res.status(200).json({
             success: true,
@@ -68,6 +69,7 @@ export const getBooks = async (req,res) => {
         });
     } catch (error) {
         // console.log("Error fetching all books",error);
+        console.error("❌ Error in /get-books:", error);
         return res.status(500).json({
             success: false,
             message: "Internal Server Error"
