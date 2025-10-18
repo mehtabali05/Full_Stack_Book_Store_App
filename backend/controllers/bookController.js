@@ -1,7 +1,8 @@
 // import cloudinary from "../index.js";
-import { cloudinaryConfig } from "../index.js";
+// import { cloudinaryConfig } from "../index.js";
 import Book from "../models/BookModel.js";
 import mongoose from "mongoose";
+import { cloudinaryConfig } from "../utils/cloudinary.js";
 
 // add a new book => /book/add
 export const addBook = async (req,res) => {

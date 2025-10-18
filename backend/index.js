@@ -1,15 +1,15 @@
 import express from "express"
 import dotenv from "dotenv"
 dotenv.config();
-import { v2 as cloudinary } from 'cloudinary';
+// import { v2 as cloudinary } from 'cloudinary';
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+// cloudinary.config({
+//   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+//   api_key: process.env.CLOUDINARY_API_KEY,
+//   api_secret: process.env.CLOUDINARY_API_SECRET,
+// });
 
-export const cloudinaryConfig = cloudinary;
+// const cloudinaryConfig = cloudinary;
 import cookieParser from "cookie-parser"
 import cors from "cors"
 import { connectDB } from "./config/connectDB.js";
@@ -21,17 +21,17 @@ import orderRouter from "./routes/OrderRouter.js";
 import addressRouter from "./routes/AddressRouter.js";
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+// const PORT = process.env.PORT || 8080;
 
 // DATABASE 
-
+connectDB();
 
 // MIDDLEWARES
 app.use(cors({origin: "https://full-stack-book-store-app-66d7.vercel.app",
     credentials:true
 }));
 
-connectDB();
+
 
 // app.use(express.json());
 // Only skip express.json for the webhook path:
@@ -59,9 +59,9 @@ app.get("/",(req,res) => {
     res.send("Welcome to the Server");
 });
 
-app.listen(PORT,()=>{
-    console.log(`Server is listening on port ${PORT}`);
-})
+// app.listen(PORT,()=>{
+//     console.log(`Server is listening on port ${PORT}`);
+// })
 
 
 export default app;
