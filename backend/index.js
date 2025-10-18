@@ -13,7 +13,9 @@ import orderRouter from "./routes/OrderRouter.js";
 import addressRouter from "./routes/AddressRouter.js";
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+// const PORT = process.env.PORT || 8080;
+
+const clientUrl = process.env.CLIENT_URL || 'http://localhost:3000';
 
 // DATABASE 
 connectDB();
@@ -23,7 +25,7 @@ connectDB();
 // });
 
 // MIDDLEWARES
-app.use(cors({origin: process.env.CLIENT_URL,
+app.use(cors({origin: clientUrl,
     credentials:true
 }));
 
