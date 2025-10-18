@@ -27,6 +27,8 @@ app.use(cors({origin: process.env.CLIENT_URL,
     credentials:true
 }));
 
+
+
 // const allowedOrigins = [
 //   "https://bookstore-delta-peach.vercel.app",
 //   "https://bookstore-git-main-mehtabali05s-projects.vercel.app",
