@@ -63,5 +63,9 @@ app.get("/",(req,res) => {
 //     console.log(`Server is listening on port ${PORT}`);
 // })
 
+app.use((err, req, res, next) => {
+  console.error("SERVER ERROR:", err);
+  res.status(500).json({ success: false, message: "Internal Server Error" });
+});
 
 export default app;

@@ -66,6 +66,7 @@ export const getBooks = async (req,res) => {
         });
     } catch (error) {
         // console.log("Error fetching all books",error);
+        console.log("GET BOOKS ERROR:", error);
         return res.status(500).json({
             success: false,
             message: "Internal Server Error"
