@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-// import { trim } from "validator";
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -8,7 +7,6 @@ const userSchema = new Schema({
         required: [true, "Username is required"],
         trim: true,
         minlength: [3, "Username must be at least 3 characters long"],
-        unique: true,
         lowercase: true
     },
     email: {
@@ -16,7 +14,8 @@ const userSchema = new Schema({
         required: [true, "Email is required"],
         trim: true,
         unique: true,
-        lowercase: true 
+        lowercase: true,
+        index: true 
     },
     password: {
         type: String,
@@ -24,11 +23,31 @@ const userSchema = new Schema({
         required: [true, "Password is required"],
         minlength: [6, "Password must be at least 6 characters long"]
     },
-    cartItems: {
-        type: Object,
-        default: {},
-    }
-},{timeStamp:true,minimize:false})
+    role : {
+        type: String,
+        enum: ["user","admin"],
+        default: "user"
+    },
+    refreshToken:{
+        type: String
+    },
+    tokenVersion: {
+        type: Number,
+        default: 0,
+    },
+    cartItems: [
+        {
+            book:{
+                type: Schema.Types.ObjectId,
+                ref:"Book"
+            },
+            quantity: {
+                type: Number,
+                default: 1
+            }
+        }
+    ]
+},{timestamps:true,minimize:false})
 
 const User = mongoose.model("User",userSchema);
 

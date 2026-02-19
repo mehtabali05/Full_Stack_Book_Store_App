@@ -1,9 +1,9 @@
 import express from "express"
-import { authUser } from "../middlewares/authUser.js";
 import { addAddress, getAddress } from "../controllers/AddressController.js";
+import { protect } from "../middlewares/authMiddleware.js";
 const addressRouter = express.Router();
 
-addressRouter.post("/add",authUser,addAddress);
-addressRouter.get("/get",authUser,getAddress);
+addressRouter.post("/add",protect,addAddress);
+addressRouter.get("/get",protect,getAddress);
  
 export default addressRouter;

@@ -14,7 +14,7 @@ const SendOtpPage = () => {
   
     try {
       const {data} = await axios.post("/user/email-send",{email},{withCredentials: true});
-      // console.log("Email Sent data",data);
+      console.log("Email Sent data",data);
       if(data.success){
         toast.success(data.message);
         localStorage.setItem("resetEmail", email);

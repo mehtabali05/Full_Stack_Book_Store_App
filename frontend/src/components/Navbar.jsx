@@ -52,9 +52,9 @@ const Navbar = () => {
                                 <BsCart2 onClick={() =>{
                                 navigate("/cart");
                                 window.scrollTo({top:0,behavior:"smooth"})
-                            }} className="text-2xl" />
-                            <button  className="absolute color-dark -top-2 -right-3 text-xs text-white bg-primary w-[18px] h-[18px] rounded-full">{cartCount}</button>
-                        </div>
+                                }} className="text-2xl" />
+                                <button  className="absolute color-dark -top-2 -right-3 text-xs text-white bg-primary w-[18px] h-[18px] rounded-full">{cartCount}</button>
+                            </div>
                         <div className="flex items-center gap-5">
                             <button onClick={() => navigate("/my-orders")} className="cursor-pointer px-8 py-2 bg-primary text-white rounded-full">
                                 My Orders

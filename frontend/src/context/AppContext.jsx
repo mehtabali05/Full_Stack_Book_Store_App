@@ -79,10 +79,19 @@ const AppContextProvider = ({children}) => {
             } catch (error) {
               if (error.response?.status === 401) {
                 // Not logged in → no need to show toast
-                setUser(null);
-                localStorage.removeItem("user");
-              } else {
-                toast.error(error.response?.data?.message || "Error checking user auth");
+                try {
+                  await axios.post("/user/refresh-token");
+                  const {data} = await axios.get("/user/is-auth");
+
+                  if(data.success){
+                    setUser(data.user);
+                    localStorage.setItem("user",JSON.stringify(data.user));
+                    return;
+                  }
+                } catch (refreshError) { 
+                  setUser(null);
+                  localStorage.removeItem("user");
+                }
               }
             }
         };
