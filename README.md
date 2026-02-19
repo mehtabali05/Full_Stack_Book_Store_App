@@ -18,9 +18,9 @@ This is a full-stack web application for an online Book Store. Built with a mode
 
 ## Tech Stack
 
-- Backend: Node.js, Express.js (or relevant framework)  
-- Frontend: React (or another front-end library)  
-- Database: MongoDB (or SQL as applicable)  
+- Backend: Node.js, Express.js  
+- Frontend: React using shadcn UI 
+- Database: MongoDB 
 - API: RESTful endpoints for user, books, cart, orders  
 - Other: JWT (for authentication), bcrypt (password hashing), middleware for auth/roles
 
@@ -36,6 +36,7 @@ Full_Stack_Book_Store_App/
 │   ├── models/
 │   ├── routes/
 │   ├── middleware/
+├   ├── services/
 │   ├── config/
 │   └── server.js
 ├── frontend/
@@ -128,21 +129,15 @@ Open in your browser: `http://localhost:3000`
 
 ## Future Improvements
 
-* Payment gateway integration (Stripe, PayPal)
+* Payment gateway integration (Stripe)
 * Reviews & ratings system for books
 * Advanced search filters (genre, price range, author)
 * Image uploads for book covers (cloud storage)
-* Deployment to production (eg. Heroku, AWS, Vercel)
 * Write tests (unit, integration) for backend and frontend
 * Improve UI/UX: animation, theme toggle (dark/light), accessibility
 
 ---
 
-## Screenshots
-
-*Add your own screenshots here to showcase your user interface and features.*
-
----
 
 ## Author
 
