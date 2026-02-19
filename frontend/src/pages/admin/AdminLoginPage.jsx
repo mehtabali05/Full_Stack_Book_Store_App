@@ -17,7 +17,7 @@ const AdminLogin = () => {
   const handleFormData = async (e) => {
     e.preventDefault();
     try { 
-      const {data} = await axios.post("/admin/login",formData);
+      const {data} = await axios.post("/user/login",formData);
       // console.log("Admin Login Data: ",data);
       if(data?.success){
         const adminFlag = typeof data?.admin !== "undefined" ? Boolean(data.admin) : true;

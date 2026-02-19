@@ -22,15 +22,15 @@ const CartPage = () => {
     // ✅ Restrict cart access: only logged-in users can see it
     useEffect(() => {
         if (!user) {
-          toast.error('Please log in to view your cart');
-          navigate('/login');
+        //   toast.error('Please log in to view your cart');
+        //   navigate('/login');
         }
       }, [user, navigate]);
 
     const getAddress = async () => {
         try {
             const {data} = await axios.get("/address/get");
-            // console.log("Get Address",data);
+            console.log("Get Address",data);
             if(data.success){
                 setAddress(data.addresses);
                 if(data.addresses.length > 0){

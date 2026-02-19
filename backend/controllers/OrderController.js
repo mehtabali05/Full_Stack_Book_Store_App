@@ -7,7 +7,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET);
 
 export const placeOrder = async (req,res) => {
     try {
-        const userId = req.user;
+        const {id} = req.user;
+        let userId = id;
         const {items,address,paymentOption} = req.body;
 
         if(!items || !address || items.length === 0 || !paymentOption){
@@ -56,7 +57,8 @@ export const placeOrder = async (req,res) => {
 
 export const getUserOrders = async (req,res) => { 
     try {
-        const userId = req.user;
+        const {id} = req.user;
+        let userId = id;
         if (!userId) {
             return res.status(401).json({ success: false, message: "Unauthorized" });
         }
@@ -80,7 +82,7 @@ export const getUserOrders = async (req,res) => {
 export const getAllOrders = async (req,res) => {
     try {
         const orders = await Order.find({
-            $or: [{paymentType: "COD"}],
+          
         }).sort({createdAt: -1}).populate("userId","name email");
 
         res.status(200).json({
@@ -97,7 +99,8 @@ export const getAllOrders = async (req,res) => {
 
 export const createCheckoutSessionController =  async (req,res) =>{
     try {
-      const userId = req.user; // because route is protected by authUser
+        const {id} = req.user;
+        let userId = id; // because route is protected by authUser
       const {items, address} = req.body; 
       // const origin = req.headers.get("origin");
   
@@ -148,7 +151,7 @@ export const createCheckoutSessionController =  async (req,res) =>{
         
         metadata: {
           orderId: order._id.toString(),
-          userId
+          userId: userId.toString()
         }
     }); 
   

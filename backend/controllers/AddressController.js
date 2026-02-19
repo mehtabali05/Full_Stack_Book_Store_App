@@ -3,14 +3,16 @@ import Address from "../models/AddressModel.js";
 export const addAddress = async (req,res) => {
     try {
         const {address} = req.body;
-        const userId = req.user;
+        const {id} = req.user;
+        console.log(id,address)
         const savedAddress = await Address.create({
             ...address,
-            userId: userId
+            userId: id
         });
 
         res.status(201).json({
             success: true,
+            savedAddress,
             message: "Address added successfully"
         })
     } catch (error) {
@@ -22,8 +24,10 @@ export const addAddress = async (req,res) => {
 
 export const getAddress = async (req,res) => {
     try {
-        const userId = req.user;
-        const addresses = await Address.find({userId});
+        const {id}= req.user;
+        console.log("user", id);
+        const addresses = await Address.find({});
+        // const addresses = await Address.find({});
         res.status(201).json({
             success: true,
             addresses

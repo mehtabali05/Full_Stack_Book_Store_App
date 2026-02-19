@@ -125,7 +125,7 @@ export const checkAuth = asyncHandler(async (req,res) => {
 export const logoutUser = asyncHandler(async (req,res) => {
     const {refreshToken} = req.cookies;
     if(refreshToken){
-        const hashed = crypto.createHash("sha256").update(refreshToken).digest(hex);
+        const hashed = crypto.createHash("sha256").update(refreshToken).digest("hex");
 
         await User.findOneAndUpdate(
             {refreshToken: hashed},

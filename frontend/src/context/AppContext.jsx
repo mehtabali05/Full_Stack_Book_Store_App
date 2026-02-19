@@ -50,12 +50,12 @@ const AppContextProvider = ({children}) => {
 
         const fetchIsAdmin = async () => {
             try {
-              const { data } = await axios.get("/admin/is-auth");
+              const { data } = await axios.get("/user/is-auth");
               // console.log("Is auth data admin:", data); 
               if (data.success) {
-                const adminFlag = typeof data.admin !== "undefined" ? Boolean(data.admin) : false;
-                setIsAdmin(adminFlag);
-                localStorage.setItem("isAdmin", JSON.stringify(adminFlag));
+                // const adminFlag = typeof data.admin !== "undefined" ? Boolean(data.admin) : false;
+                setIsAdmin(data.user);
+                localStorage.setItem("isAdmin", JSON.stringify(data.user));
               }
             } catch (error) {
               if (error.response?.status === 401) {

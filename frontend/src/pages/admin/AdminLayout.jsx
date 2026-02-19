@@ -16,7 +16,7 @@ const AdminLayoutPage = () => {
 
   const logout = async () => {
     try {
-        const {data} = await axios.get("/admin/logout");
+        const {data} = await axios.post("/user/logout");
         // console.log("Admin Logout data",data);
         if(data.success){
             setIsAdmin(false);
